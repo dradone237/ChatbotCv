@@ -194,7 +194,7 @@ class _CreateActivityFormState extends State<CreateActivityForm> {
                 if (_currentStep < 2) {
                   // _currentStep++;
                   _currentStep += 1;
-                 } 
+                }
                 //else {
                 //   if (_fbKey.currentState!.saveAndValidate()) {
                 //     // Collecter les données du formulaire

@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:ijshopflutter/config/constants.dart';
 import 'package:ijshopflutter/ui/account/account.dart';
-import 'package:ijshopflutter/ui/home/home.dart';
+import 'package:ijshopflutter/ui/home/home1.dart';
 import 'package:ijshopflutter/ui/reuseable/app_localizations.dart';
 import 'package:ijshopflutter/ui/shopping_cart/shopping_cart.dart';
 import 'package:ijshopflutter/ui/wishlist/wishlist.dart';

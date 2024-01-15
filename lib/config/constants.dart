@@ -30,12 +30,19 @@ const String GLOBAL_URL = 'https://ijtechnology.net/assets/images/api/ijshop';
 //const String GLOBAL_URL = 'http://192.168.0.4/ijshop';
 
 const String SERVER_URL = 'https://ijtechnology.net/api_ijshop/';
+// pour l'application roshub
 // declaration de notre constante BASE_URL qui contient l'URL de base de notre API et va nous permettre d'effectuer les apples a notre API , en ajoutant des extensions d'URL spécifiques pour les différentes actions de l'API explemle d'URL specifique : pour le login:"public/user/login",pour le sign up:public/user/sign-up
 // connecxion avec l'api pour le login de l'utilisateur cette nouvelle constante est appel BASE_URL
-const String BASE_URL = 'https://api.amphimill.com/api/v1/';
-const String COMPTE_URL = 'https://api.amphimill.com/api/v1/';
+const String BASE_URL = 'https://api.amphimill.com/api/v1/'; // login
+const String COMPTE_URL = 'https://api.amphimill.com/api/v1/'; // signup
+
+// pour l'application de Chat
+const String DADA_URL = 'http://192.168.201.96:3000'; //
+const String DORA_URL = 'http://192.168.201.96:3000'; //
 
 //const String SERVER_URL = 'http://192.168.0.4/ijshop/api/';
+
+const String DADO_URL = 'http:// 192.168.201.96:3000';
 
 const String ADDRESS_API = SERVER_URL + "account/getAddress";
 const String LAST_SEEN_PRODUCT_API = SERVER_URL + "account/getLastSeen";
@@ -68,8 +75,16 @@ const String SHOPPING_CART_API = SERVER_URL + "shopping_cart/getShoppingCart";
 const String WISHLIST_API = SERVER_URL + "wishlist/getWishlist";
 
 //ROSHUB Ressource pour le login et le sign up
-const String LOGIN_API = BASE_URL +
-    "public/user/login"; // qui est le lien de l'API vers la ressource login en ligne
-const String SIGNUP_API = BASE_URL +
-    "public/user/sign-up"; // qui est le lien de l'API vers la ressource signup en ligne
-const String ACTIVITY_API =BASE_URL + "requests";
+// const String LOGIN_API = BASE_URL +
+//     "public/user/login";  qui est le lien de l'API vers la ressource login en ligne
+
+// const String SIGNUP_API = BASE_URL +
+//     "public/user/sign-up";  qui est le lien de l'API vers la ressource signup en ligne
+
+const String ACTIVITY_API = BASE_URL + "requests";
+
+// pour l'application de chat
+// le lien vers L"API vers le backend en local
+const String LOGIN_API = DADA_URL + "/login";
+// le lien vers l"API vers le backend en local
+const String SIGNUP_API = DADA_URL + "/inscription";

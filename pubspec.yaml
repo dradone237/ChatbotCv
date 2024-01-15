@@ -29,21 +29,21 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cached_network_image: 3.2.2
-  carousel_slider: 4.1.1
-  cupertino_icons: 1.0.5
-  dio: 4.0.6
-  fdottedline_nullsafety: 2.0.1
-  fluttertoast: 8.0.9
-  flutter_bloc: 8.1.1
-  flutter_html: 3.0.0-alpha.5
-  image_cropper: 3.0.0
-  image_picker: 0.8.5+3
-  intl: 0.18.0
-  package_info_plus: 4.0.1
-  permission_handler: 10.0.2
-  pin_code_fields: 7.4.0
-  shared_preferences: 2.0.15
+  cached_network_image: 3.2.2 # cette librairie est utilise pour facillter le telechargement d'une image et la stoker dans le cache de l'application pour faciliter l'appel de l'image dans les differentes pages de  l'application
+  carousel_slider: 4.1.1 # cette librairie est utilise pour pourvoir definir les carousel et les slider des images qui peuvent slider de manier horizontale
+  cupertino_icons: 1.0.5 #  c'est la librairie cupertino pour gere les icones
+  dio: 4.0.6 # c'est un package qui est utilise pour gerer les l'apples d'API
+  fdottedline_nullsafety: 2.0.1 # cette librairie est utilise pour afficher les petits en bas des carousels pour slider entre les differnts carousels
+  fluttertoast: 8.0.9 # cette librairie est utilise pour afficher des toast c'est a dire les petits fenetres modal, les boites de dialogue et les boites d'atlert qui apparaissent suivant sur les application apres avoir terminer une action pas les fenettre de succes, de validation, de connection reussi apres s'avoir login l'avantage avec le toast s'apparait apres sa disparait seul enfonction des configuration effectuer pour 5s,10s avant de diaparaitre ce qui est differnt des boites de dialogues est l'utilisateur va prendre son de le lire le contenu de la boite de dialogue apres lui meme decide de fermer la fenetre .
+  flutter_bloc: 8.1.1 # cette librairie est utilise pour gere l'etat dans notre application
+  flutter_html: 3.0.0-alpha.5 # cette libririe est lie a flutter web lorsque on travail sur la version wweb de flutter
+  image_cropper: 3.0.0 # cette libraire est utilise pour recupere une image depuis la galerie ou depuis l'appariel photo du telephone et particularite avec cropper ce que apres avoir recuper l'image on peut uniquement selectionner la partier ou la zone que on veux affiche de l'image
+  image_picker: 0.8.5+3 # cette libraire est utilise pour recupere une image depuis la galerie ou depuis l'appariel photo du telephone
+  intl: 0.18.0 # cette librairie est utilise pour l'internalisation c'est a dite pour  le changement des langues, la gestion de la monaie, la gestion du temps, des heures bref ceux qui est lier a un chagement d'un pays a un notre
+  package_info_plus: 4.0.1 # ??
+  permission_handler: 10.0.2 # cette librairie est utilise pour demander la permission au utilisateurs pas exemple demande l'acces a la camera de son telephone Nb sur tous les application il ya ce qu'on applle le respect des droits de l'utilisateur donc l'utilisateur il libre donne son autorisation sur certainns action comme ouvrir l'appareil photo de son telephone et selectionne une image Donc cette librairie est utilise pour demmande une autorisation aux utilisateur avant d'effectuer une action  etc
+  pin_code_fields: 7.4.0 # cette librairie est utilise construit l'etape de verification du sign-up
+  shared_preferences: 2.0.15 # est un comme le local storage est ulise pour faire la sauvegarde de donnees de type basique tel que les string,doudle, int et bool
   shimmer: 2.0.0
 
   intl_phone_number_input: ^0.7.3+1

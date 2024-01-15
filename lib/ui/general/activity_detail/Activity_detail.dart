@@ -50,9 +50,17 @@ class ActivityDetailPage extends StatefulWidget {
   final int review;
   final String service;
   ActivityModel? activity;
-  
 
-  ActivityDetailPage( {Key? key, this.activity, this.title='text', this.image='', this.price=24, this.rating=4, this.review=45, this.service="1",}) : super(key: key);
+  ActivityDetailPage({
+    Key? key,
+    this.activity,
+    this.title = 'text',
+    this.image = '',
+    this.price = 24,
+    this.rating = 4,
+    this.review = 45,
+    this.service = "1",
+  }) : super(key: key);
 
   @override
   _ActivityDetailPageState createState() => _ActivityDetailPageState();
@@ -96,10 +104,12 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
   void initState() {
     // get data when initState
     _relatedProductBloc = BlocProvider.of<RelatedProductBloc>(context);
-    _relatedProductBloc.add(GetRelatedProduct(sessionId: SESSION_ID, apiToken: apiToken));
+    _relatedProductBloc
+        .add(GetRelatedProduct(sessionId: SESSION_ID, apiToken: apiToken));
 
     _reviewBloc = BlocProvider.of<ReviewBloc>(context);
-    _reviewBloc.add(GetReviewProduct(sessionId: SESSION_ID, skip: '0', limit: '3', apiToken: apiToken));
+    _reviewBloc.add(GetReviewProduct(
+        sessionId: SESSION_ID, skip: '0', limit: '3', apiToken: apiToken));
 
     // image slider for the product
     _imgProductSlider.add(widget.image);
@@ -115,7 +125,7 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
     super.initState();
   }
 
-  void _initForLang(){
+  void _initForLang() {
     setState(() {
       _colorList = [
         AppLocalizations.of(context)!.translate('red')!,
@@ -151,17 +161,16 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
             child: TextButton(
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) => Colors.grey[100]!,
+                    (Set<MaterialState> states) => Colors.grey[100]!,
                   ),
                   overlayColor: MaterialStateProperty.all(Colors.transparent),
-                  shape: MaterialStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
-                      )
-                  ),
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5.0),
+                  )),
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SearchPage()));
                 },
                 child: Row(
                   children: [
@@ -169,15 +178,15 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                     Icon(Icons.search, color: Colors.grey[500], size: 18),
                     SizedBox(width: 8),
                     Text(
-                      AppLocalizations.of(context)!.translate('search_activity')!,
+                      AppLocalizations.of(context)!
+                          .translate('search_activity')!,
                       style: TextStyle(
                           fontSize: 13,
                           color: Colors.grey[600],
                           fontWeight: FontWeight.normal),
                     )
                   ],
-                )
-            ),
+                )),
           ),
           backgroundColor: GlobalStyle.appBarBackgroundColor,
           systemOverlayStyle: GlobalStyle.appBarSystemOverlayStyle,
@@ -187,18 +196,24 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                 constraints: BoxConstraints(),
                 icon: _customShoppingCart(_shoppingCartCount),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => ShoppingCartPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ShoppingCartPage()));
                 }),
             IconButton(
                 icon: _globalWidget.customNotifIcon(8, BLACK_GREY),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationPage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationPage()));
                 }),
           ],
           bottom: _globalWidget.bottomAppBar(),
         ),
         body: WillPopScope(
-          onWillPop: (){
+          onWillPop: () {
             Navigator.pop(context);
             return Future.value(true);
           },
@@ -206,22 +221,23 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
             listeners: [
               BlocListener<RelatedProductBloc, RelatedProductState>(
                   listener: (context, state) {
-                    //print('state atas : '+state.toString());
-                    if(state is RelatedProductError) {
-                      _globalFunction.showToast(type: 'error', message: state.errorMessage);
-                    }
-                    if(state is GetRelatedProductSuccess) {
-                      relatedProductData.addAll(state.relatedProductData);
-                    }
-                  }
-              ),
+                //print('state atas : '+state.toString());
+                if (state is RelatedProductError) {
+                  _globalFunction.showToast(
+                      type: 'error', message: state.errorMessage);
+                }
+                if (state is GetRelatedProductSuccess) {
+                  relatedProductData.addAll(state.relatedProductData);
+                }
+              }),
               BlocListener<ReviewBloc, ReviewState>(
                 listener: (context, state) {
-                  if(state is ReviewProductError) {
-                    _globalFunction.showToast(type: 'error', message: state.errorMessage);
+                  if (state is ReviewProductError) {
+                    _globalFunction.showToast(
+                        type: 'error', message: state.errorMessage);
                   }
-                  if(state is GetReviewProductSuccess) {
-                    if(state.reviewData.length==0){
+                  if (state is GetReviewProductSuccess) {
+                    if (state.reviewData.length == 0) {
                       _lastDataReview = true;
                     } else {
                       reviewData.addAll(state.reviewData);
@@ -238,7 +254,6 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                       _createProductSlider(),
                       _createProductPriceTitleEtc(),
                       // _createProductVariant(),
-                      
                       _createDeliveryEstimated(),
                       _createProductInformation(),
                       _progressIndicator(context),
@@ -261,20 +276,22 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                       ),
                     ],
                   ),
-                 
                   child: Row(
                     children: [
                       Container(
                         child: GestureDetector(
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => ChatUsPage()));
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ChatUsPage()));
                           },
                           child: ClipOval(
                             child: Container(
                                 color: SOFT_BLUE,
                                 padding: EdgeInsets.all(9),
-                                child: Icon(Icons.chat, color: Colors.white, size: 16)
-                            ),
+                                child: Icon(Icons.chat,
+                                    color: Colors.white, size: 16)),
                           ),
                         ),
                       ),
@@ -283,11 +300,14 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                       ),
                       Expanded(
                         child: GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             setState(() {
                               _shoppingCartCount++;
                             });
-                            Fluttertoast.showToast(msg: AppLocalizations.of(context)!.translate('added_to_cart')!, toastLength: Toast.LENGTH_LONG);
+                            Fluttertoast.showToast(
+                                msg: AppLocalizations.of(context)!
+                                    .translate('added_to_cart')!,
+                                toastLength: Toast.LENGTH_LONG);
                           },
                           child: Container(
                             alignment: Alignment.center,
@@ -295,19 +315,17 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                             margin: EdgeInsets.only(right: 8),
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                border: Border.all(
-                                    width: 1,
-                                    color: SOFT_BLUE
-                                ),
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(10) //         <--- border radius here
-                                )
-                            ),
-                            child: Text(AppLocalizations.of(context)!.translate('add_to_cart')!, style: TextStyle(
-                                color: SOFT_BLUE, fontWeight: FontWeight.bold
-                            )),
+                                border: Border.all(width: 1, color: SOFT_BLUE),
+                                borderRadius: BorderRadius.all(Radius.circular(
+                                        10) //         <--- border radius here
+                                    )),
+                            child: Text(
+                                AppLocalizations.of(context)!
+                                    .translate('add_to_cart')!,
+                                style: TextStyle(
+                                    color: SOFT_BLUE,
+                                    fontWeight: FontWeight.bold)),
                           ),
-                          
                         ),
                       ),
                     ],
@@ -315,10 +333,8 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                 )
               ],
             ),
-            
           ),
-        )
-    );
+        ));
   }
 
   Widget _customShoppingCart(int count) {
@@ -353,13 +369,16 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
     );
   }
 
-  Widget _createProductSlider(){
+  Widget _createProductSlider() {
     return Stack(
       children: [
         CarouselSlider(
-          items: _imgProductSlider.map((item) => Container(
-            child: buildCacheNetworkImage(width: 0, height: 0, url: item),
-          )).toList(),
+          items: _imgProductSlider
+              .map((item) => Container(
+                    child:
+                        buildCacheNetworkImage(width: 0, height: 0, url: item),
+                  ))
+              .toList(),
           options: CarouselOptions(
               aspectRatio: 1,
               viewportFraction: 1.0,
@@ -369,8 +388,7 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                 setState(() {
                   _currentImageSlider = index;
                 });
-              }
-          ),
+              }),
         ),
         Positioned(
           bottom: 16,
@@ -378,19 +396,19 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
           child: Container(
             padding: EdgeInsets.fromLTRB(8, 4, 8, 4),
             decoration: BoxDecoration(
-                color: SOFT_BLUE,
-                borderRadius: BorderRadius.circular(4)
-            ),
-            child: Text((_currentImageSlider+1).toString()+'/'+_imgProductSlider.length.toString(), style: TextStyle(
-                color: Colors.white, fontSize: 11
-            )),
+                color: SOFT_BLUE, borderRadius: BorderRadius.circular(4)),
+            child: Text(
+                (_currentImageSlider + 1).toString() +
+                    '/' +
+                    _imgProductSlider.length.toString(),
+                style: TextStyle(color: Colors.white, fontSize: 11)),
           ),
         ),
       ],
     );
   }
 
-  Widget _createProductPriceTitleEtc(){
+  Widget _createProductPriceTitleEtc() {
     return Container(
       color: Colors.white,
       padding: EdgeInsets.all(16),
@@ -403,35 +421,45 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
             children: [
               // Text('\$'+_globalFunction.removeDecimalZeroFormat(widget.price), style: GlobalStyle.detailProductPrice),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   setState(() {
-                    if(_isLove==true){
+                    if (_isLove == true) {
                       _isLove = false;
-                      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.translate('item_deleted_activity')!, toastLength: Toast.LENGTH_LONG);
+                      Fluttertoast.showToast(
+                          msg: AppLocalizations.of(context)!
+                              .translate('item_deleted_activity')!,
+                          toastLength: Toast.LENGTH_LONG);
                     } else {
-                      Fluttertoast.showToast(msg: AppLocalizations.of(context)!.translate('item_added_activity')!, toastLength: Toast.LENGTH_LONG);
+                      Fluttertoast.showToast(
+                          msg: AppLocalizations.of(context)!
+                              .translate('item_added_activity')!,
+                          toastLength: Toast.LENGTH_LONG);
                       _isLove = true;
                     }
                   });
                 },
-                child: Icon(
-                    Icons.favorite, color: _isLove==true?ASSENT_COLOR:BLACK_GREY, size: 28
-                ),
+                child: Icon(Icons.favorite,
+                    color: _isLove == true ? ASSENT_COLOR : BLACK_GREY,
+                    size: 28),
               )
             ],
           ),
           SizedBox(height: 12),
-          Text(widget.title, style: TextStyle(
-            fontSize: 14,
-          )),
+          Text(widget.title,
+              style: TextStyle(
+                fontSize: 14,
+              )),
           SizedBox(height: 12),
           IntrinsicHeight(
             child: Row(
               children: [
                 GestureDetector(
                   behavior: HitTestBehavior.translucent,
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProductReviewPage()));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductReviewPage()));
                   },
                   child: Row(
                     children: [
@@ -439,13 +467,14 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                       SizedBox(
                         width: 3,
                       ),
-                      Text(widget.rating.toString(), style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14
-                      )),
+                      Text(widget.rating.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14)),
                       SizedBox(
                         width: 3,
                       ),
-                      Text('('+widget.review.toString()+')', style: TextStyle(fontSize: 13, color: BLACK_GREY)),
+                      Text('(' + widget.review.toString() + ')',
+                          style: TextStyle(fontSize: 13, color: BLACK_GREY)),
                     ],
                   ),
                 ),
@@ -454,14 +483,19 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                   thickness: 1,
                   color: Colors.grey[300],
                 ),
-                Text(widget.service.toString()+' '+AppLocalizations.of(context)!.translate('action')!, style: TextStyle(fontSize: 13, color: BLACK_GREY)),
+                Text(
+                    widget.service.toString() +
+                        ' ' +
+                        AppLocalizations.of(context)!.translate('action')!,
+                    style: TextStyle(fontSize: 13, color: BLACK_GREY)),
                 VerticalDivider(
                   width: 30,
                   thickness: 1,
                   color: Colors.grey[300],
                 ),
                 // Icon(Icons.location_on, color: SOFT_GREY, size: 16),
-                Text('Brooklyn', style: TextStyle(fontSize: 13, color: SOFT_GREY))
+                Text('Brooklyn',
+                    style: TextStyle(fontSize: 13, color: SOFT_GREY))
               ],
             ),
           ),
@@ -470,11 +504,9 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
     );
   }
 
-  
-
-  Widget radioSize(String txt,int index){
+  Widget radioSize(String txt, int index) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         setState(() {
           _sizeIndex = index;
         });
@@ -486,22 +518,20 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
             color: _sizeIndex == index ? SOFT_BLUE : Colors.white,
             border: Border.all(
                 width: 1,
-                color: _sizeIndex == index ? SOFT_BLUE : Colors.grey[300]!
-            ),
+                color: _sizeIndex == index ? SOFT_BLUE : Colors.grey[300]!),
             borderRadius: BorderRadius.all(
                 Radius.circular(10) //         <--- border radius here
-            )
-        ),
-        child: Text(txt, style: TextStyle(
-            color: _sizeIndex == index ? Colors.white : CHARCOAL
-        )),
+                )),
+        child: Text(txt,
+            style: TextStyle(
+                color: _sizeIndex == index ? Colors.white : CHARCOAL)),
       ),
     );
   }
 
-  Widget radioColor(String txt,int index){
+  Widget radioColor(String txt, int index) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         setState(() {
           _colorIndex = index;
         });
@@ -513,23 +543,22 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
             color: _colorIndex == index ? SOFT_BLUE : Colors.white,
             border: Border.all(
                 width: 1,
-                color: _colorIndex == index ? SOFT_BLUE : Colors.grey[300]!
-            ),
+                color: _colorIndex == index ? SOFT_BLUE : Colors.grey[300]!),
             borderRadius: BorderRadius.all(
                 Radius.circular(10) //         <--- border radius here
-            )
-        ),
-        child: Text(txt, style: TextStyle(
-            color: _colorIndex == index ? Colors.white : CHARCOAL
-        )),
+                )),
+        child: Text(txt,
+            style: TextStyle(
+                color: _colorIndex == index ? Colors.white : CHARCOAL)),
       ),
     );
   }
 
-  Widget _createDeliveryEstimated(){
+  Widget _createDeliveryEstimated() {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context) => DeliveryEstimatedPage()));
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => DeliveryEstimatedPage()));
       },
       child: Container(
           margin: EdgeInsets.only(top: 12),
@@ -541,7 +570,8 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppLocalizations.of(context)!.translate('delivery')!, style: GlobalStyle.sectionTitle),
+                    Text(AppLocalizations.of(context)!.translate('delivery')!,
+                        style: GlobalStyle.sectionTitle),
                     SizedBox(
                       height: 16,
                     ),
@@ -554,8 +584,13 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
                           color: BLACK_GREY,
                         ),
                         children: <TextSpan>[
-                          new TextSpan(text: AppLocalizations.of(context)!.translate('calculated_message')!),
-                          new TextSpan(text: 'West New York, NJ', style: new TextStyle(fontWeight: FontWeight.bold)),
+                          new TextSpan(
+                              text: AppLocalizations.of(context)!
+                                  .translate('calculated_message')!),
+                          new TextSpan(
+                              text: 'West New York, NJ',
+                              style:
+                                  new TextStyle(fontWeight: FontWeight.bold)),
                         ],
                       ),
                     ),
@@ -564,12 +599,11 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
               ),
               Icon(Icons.chevron_right, size: 36, color: CHARCOAL)
             ],
-          )
-      ),
+          )),
     );
   }
 
-  Widget _createProductInformation(){
+  Widget _createProductInformation() {
     return Container(
         margin: EdgeInsets.only(top: 12),
         padding: EdgeInsets.all(16),
@@ -577,19 +611,18 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppLocalizations.of(context)!.translate('information')!, style: GlobalStyle.sectionTitle),
+            Text(AppLocalizations.of(context)!.translate('information')!,
+                style: GlobalStyle.sectionTitle),
             SizedBox(
               height: 16,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(AppLocalizations.of(context)!.translate('weight')!, style: TextStyle(
-                    color: BLACK_GREY
-                )),
-                Text('300 '+AppLocalizations.of(context)!.translate('gram')!, style: TextStyle(
-                    color: BLACK_GREY
-                ))
+                Text(AppLocalizations.of(context)!.translate('weight')!,
+                    style: TextStyle(color: BLACK_GREY)),
+                Text('300 ' + AppLocalizations.of(context)!.translate('gram')!,
+                    style: TextStyle(color: BLACK_GREY))
               ],
             ),
             SizedBox(
@@ -598,12 +631,10 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(AppLocalizations.of(context)!.translate('condition')!, style: TextStyle(
-                    color: BLACK_GREY
-                )),
-                Text(AppLocalizations.of(context)!.translate('second')!, style: TextStyle(
-                    color: BLACK_GREY
-                ))
+                Text(AppLocalizations.of(context)!.translate('condition')!,
+                    style: TextStyle(color: BLACK_GREY)),
+                Text(AppLocalizations.of(context)!.translate('second')!,
+                    style: TextStyle(color: BLACK_GREY))
               ],
             ),
             SizedBox(
@@ -612,58 +643,62 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(AppLocalizations.of(context)!.translate('category')!, style: TextStyle(
-                    color: BLACK_GREY
-                )),
+                Text(AppLocalizations.of(context)!.translate('category')!,
+                    style: TextStyle(color: BLACK_GREY)),
                 GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProductCategoryPage(categoryId: 3, categoryName: AppLocalizations.of(context)!.translate('electronic')!,)));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductCategoryPage(
+                                  categoryId: 3,
+                                  categoryName: AppLocalizations.of(context)!
+                                      .translate('electronic')!,
+                                )));
                   },
-                  child: Text(AppLocalizations.of(context)!.translate('electronic')!, style: TextStyle(
-                      color: SOFT_BLUE
-                  )),
+                  child: Text(
+                      AppLocalizations.of(context)!.translate('electronic')!,
+                      style: TextStyle(color: SOFT_BLUE)),
                 )
               ],
             ),
           ],
-        )
-    );
+        ));
   }
-   Widget _progressIndicator(BuildContext context) {
+
+  Widget _progressIndicator(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 12),
       padding: EdgeInsets.all(16),
       color: Colors.white,
-        child: Column(
-         
-         crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-           Text(AppLocalizations.of(context)!.translate('Progression')!, style: GlobalStyle.sectionTitle),
-            SizedBox(
-              height: 16,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(AppLocalizations.of(context)!.translate('Progression')!,
+              style: GlobalStyle.sectionTitle),
+          SizedBox(
+            height: 16,
+          ),
+          Padding(
+            padding: EdgeInsets.all(15.0),
+            child: new LinearPercentIndicator(
+              width: MediaQuery.of(context).size.width - 50,
+              animation: true,
+              lineHeight: 20.0,
+
+              animationDuration: 2500,
+              percent: 0.8,
+              center: Text("80.0%"),
+              // linearStrokeCap: LinearStrokeCap.roundAll,
+              progressColor: Colors.green,
             ),
-            Padding(
-              padding: EdgeInsets.all(15.0),
-              child: new LinearPercentIndicator(
-                width: MediaQuery.of(context).size.width - 50,
-                animation: true,
-                lineHeight: 20.0,
-                
-                animationDuration: 2500,
-                percent: 0.8,
-                center: Text("80.0%"),
-                // linearStrokeCap: LinearStrokeCap.roundAll,
-                progressColor: Colors.green,
-              ),
-            ),
-            
-          ],
-        ),
-      
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _createActivityDescription(){
+  Widget _createActivityDescription() {
     return Container(
         margin: EdgeInsets.only(top: 12),
         padding: EdgeInsets.all(16),
@@ -671,77 +706,81 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(AppLocalizations.of(context)!.translate('description')!, style: TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold
-            )),
+            Text(AppLocalizations.of(context)!.translate('description')!,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
             SizedBox(
               height: 16,
             ),
-            Text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nQuisque tortor tortor, ultrices id scelerisque a, elementum id elit. Maecenas feugiat tellus sed augue malesuada, id tempus ex sodales.'),
+            Text(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.\n\nQuisque tortor tortor, ultrices id scelerisque a, elementum id elit. Maecenas feugiat tellus sed augue malesuada, id tempus ex sodales.'),
             SizedBox(
               height: 16,
             ),
             GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ProductDescriptionPage(name: widget.title, image: widget.image)));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProductDescriptionPage(
+                            name: widget.title, image: widget.image)));
               },
               child: Center(
-                child: Text(AppLocalizations.of(context)!.translate('read_more')!, style: TextStyle(
-                    color: SOFT_BLUE
-                )),
+                child: Text(
+                    AppLocalizations.of(context)!.translate('read_more')!,
+                    style: TextStyle(color: SOFT_BLUE)),
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 
-  Widget _createProductRelated(boxImageSize){
+  Widget _createProductRelated(boxImageSize) {
     return Container(
         margin: EdgeInsets.only(top: 12),
-        padding: EdgeInsets.only(bottom:16),
+        padding: EdgeInsets.only(bottom: 16),
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               margin: EdgeInsets.all(16),
-              child: Text(AppLocalizations.of(context)!.translate('related_product')!, style: GlobalStyle.sectionTitle),
+              child: Text(
+                  AppLocalizations.of(context)!.translate('related_product')!,
+                  style: GlobalStyle.sectionTitle),
             ),
             Container(
-              height: boxImageSize*GlobalStyle.horizontalProductHeightMultiplication,
+              height: boxImageSize *
+                  GlobalStyle.horizontalProductHeightMultiplication,
               child: BlocBuilder<RelatedProductBloc, RelatedProductState>(
                 builder: (context, state) {
                   //print('state bawah : '+state.toString());
-                  if(state is RelatedProductError) {
+                  if (state is RelatedProductError) {
                     return Container(
                         child: Center(
-                            child: Text(ERROR_OCCURED, style: TextStyle(
-                                fontSize: 14,
-                                color: BLACK_GREY
-                            ))
-                        )
-                    );
+                            child: Text(ERROR_OCCURED,
+                                style: TextStyle(
+                                    fontSize: 14, color: BLACK_GREY))));
                   } else {
-                    if(_lastDataRelated){
+                    if (_lastDataRelated) {
                       return Container(
                           child: Center(
-                              child: Text(AppLocalizations.of(context)!.translate('no_related_product')!, style: TextStyle(
-                                  fontSize: 14,
-                                  color: BLACK_GREY
-                              ))
-                          )
-                      );
+                              child: Text(
+                                  AppLocalizations.of(context)!
+                                      .translate('no_related_product')!,
+                                  style: TextStyle(
+                                      fontSize: 14, color: BLACK_GREY))));
                     } else {
-                      if(relatedProductData.length==0){
-                        return _shimmerLoading.buildShimmerRelatedProduct(boxImageSize+10);
+                      if (relatedProductData.length == 0) {
+                        return _shimmerLoading
+                            .buildShimmerRelatedProduct(boxImageSize + 10);
                       } else {
                         return ListView.builder(
                           padding: EdgeInsets.only(left: 12, right: 12),
                           scrollDirection: Axis.horizontal,
                           itemCount: relatedProductData.length,
                           itemBuilder: (BuildContext context, int index) {
-                            return _globalWidget.buildHorizontalProductCard(context, relatedProductData[index]);
+                            return _globalWidget.buildHorizontalProductCard(
+                                context, relatedProductData[index]);
                           },
                         );
                       }
@@ -751,8 +790,7 @@ class _ActivityDetailPageState extends State<ActivityDetailPage> {
               ),
             ),
           ],
-        )
-    );
+        ));
   }
 
   // Widget _createProductReview(){

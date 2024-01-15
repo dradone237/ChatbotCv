@@ -41,8 +41,8 @@ class _SignupPageState extends State<SignupPage> {
   //TextEditingController _etEmailPhone = TextEditingController();
   TextEditingController _controllerPhoneNumber = TextEditingController();
   TextEditingController _controllerPincode = TextEditingController();
-  TextEditingController _controllerName = TextEditingController();
-  TextEditingController _controllerEmail = TextEditingController();
+  // TextEditingController _controllerName = TextEditingController();
+  //TextEditingController _controllerEmail = TextEditingController();
 
   // creation et utilisation de la classe ApiService  et inportation des des differents packages
   ApiService apiService = ApiService(); // instance de la classe api service
@@ -58,8 +58,8 @@ class _SignupPageState extends State<SignupPage> {
     //_etEmailPhone.dispose();
     _controllerPhoneNumber.dispose();
     _controllerPincode.dispose();
-    _controllerName.dispose();
-    _controllerEmail.dispose();
+    //_controllerName.dispose();
+    //_controllerEmail.dispose();
     super.dispose();
   }
 
@@ -73,17 +73,17 @@ class _SignupPageState extends State<SignupPage> {
     }
   }
 
-  void signup(String phoneNumber, String password, String name, String email) {
+  void signup(String phoneNumber, String password) {
     try {
       final data = {
         'phoneNumber': phoneNumber,
         'password': password,
         //'name': name,
-        'firstName': name,
-        'lastName': name,
-        'email': email,
-        'sexe': "MAN",
-        'type': "STUDENT"
+        // 'firstName': name,
+        // 'lastName': name,
+        // 'email': email,
+        // 'sexe': "MAN",
+        // 'type': "STUDENT"
       };
       final response = apiService.signup(data, apiToken);
       print(response);
@@ -102,7 +102,7 @@ class _SignupPageState extends State<SignupPage> {
         body: ListView(
       padding: EdgeInsets.fromLTRB(30, 120, 30, 30),
       children: <Widget>[
-        Center(child: Image.asset('assets/images/logo_light.png', height: 50)),
+        // Center(child: Image.asset('assets/images/logo_light.png', height: 50)),
         SizedBox(
           height: 50,
         ),
@@ -221,115 +221,115 @@ class _SignupPageState extends State<SignupPage> {
           height: 0,
         ),
 
-        // creation du champ de saisie pour le le nom
+        // // creation du champ de saisie pour le le nom
 
-        TextFormField(
-          keyboardType: TextInputType.name,
-          controller: _controllerName,
-          style: TextStyle(color: CHARCOAL),
-          //la fonction onChanged qui est appelée chaque fois que l'utilisateur modifie le texte dans le champ de saisie.
-          onChanged: (textValue) {
-            setState(() {
-              if (_globalFunction.validateMobileNumber(textValue)) {
-                _buttonDisabled = false;
-                _validate = 'Name';
-                //} else if(_globalFunction.validateEmail(textValue)){
-                //_buttonDisabled = false;
-                //_validate = 'email';
-              } else {
-                _buttonDisabled = true;
-              }
-            });
-          },
+        // TextFormField(
+        //   keyboardType: TextInputType.name,
+        //   controller: _controllerName,
+        //   style: TextStyle(color: CHARCOAL),
+        //   //la fonction onChanged qui est appelée chaque fois que l'utilisateur modifie le texte dans le champ de saisie.
+        //   onChanged: (textValue) {
+        //     setState(() {
+        //       if (_globalFunction.validateMobileNumber(textValue)) {
+        //         _buttonDisabled = false;
+        //         _validate = 'Name';
+        //         //} else if(_globalFunction.validateEmail(textValue)){
+        //         //_buttonDisabled = false;
+        //         //_validate = 'email';
+        //       } else {
+        //         _buttonDisabled = true;
+        //       }
+        //     });
+        //   },
 
-          decoration: InputDecoration(
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: PRIMARY_COLOR, width: 2.0)),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFCCCCCC)),
-              ),
-              labelText: 'Nom',
-              labelStyle: TextStyle(color: BLACK_GREY)),
-        ),
-        SizedBox(
-          height: 0,
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(AppLocalizations.of(context)!.translate('example')! + ' : ',
-                  style: GlobalStyle.authNotes),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Takougang', style: GlobalStyle.authNotes),
-                  //Text('example@domain.com', style: GlobalStyle.authNotes)
-                ],
-              )
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 0,
-        ),
+        //   decoration: InputDecoration(
+        //       focusedBorder: UnderlineInputBorder(
+        //           borderSide: BorderSide(color: PRIMARY_COLOR, width: 2.0)),
+        //       enabledBorder: UnderlineInputBorder(
+        //         borderSide: BorderSide(color: Color(0xFFCCCCCC)),
+        //       ),
+        //       labelText: 'Nom',
+        //       labelStyle: TextStyle(color: BLACK_GREY)),
+        // ),
+        // SizedBox(
+        //   height: 0,
+        // ),
+        // Align(
+        //   alignment: Alignment.topLeft,
+        //   child: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(AppLocalizations.of(context)!.translate('example')! + ' : ',
+        //           style: GlobalStyle.authNotes),
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Text('Takougang', style: GlobalStyle.authNotes),
+        //           //Text('example@domain.com', style: GlobalStyle.authNotes)
+        //         ],
+        //       )
+        //     ],
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 0,
+        // ),
         // creation du champ de saisie pour l'email
 
-        TextFormField(
-          //keyboardType: TextInputType.emailAddress,
-          //controller: _etEmailPhone,
-          keyboardType: TextInputType.emailAddress,
-          controller: _controllerEmail,
-          style: TextStyle(color: CHARCOAL),
-          //la fonction onChanged qui est appelée chaque fois que l'utilisateur modifie le texte dans le champ de saisie.
-          onChanged: (textValue) {
-            setState(() {
-              if (_globalFunction.validateMobileNumber(textValue)) {
-                _buttonDisabled = false;
-                _validate = 'email';
-                //} else if(_globalFunction.validateEmail(textValue)){
-                //_buttonDisabled = false;
-                //_validate = 'email';
-              } else {
-                _buttonDisabled = true;
-              }
-            });
-          },
+        // TextFormField(
+        //   //keyboardType: TextInputType.emailAddress,
+        //   //controller: _etEmailPhone,
+        //   keyboardType: TextInputType.emailAddress,
+        //   controller: _controllerEmail,
+        //   style: TextStyle(color: CHARCOAL),
+        //   //la fonction onChanged qui est appelée chaque fois que l'utilisateur modifie le texte dans le champ de saisie.
+        //   onChanged: (textValue) {
+        //     setState(() {
+        //       if (_globalFunction.validateMobileNumber(textValue)) {
+        //         _buttonDisabled = false;
+        //         _validate = 'email';
+        //         //} else if(_globalFunction.validateEmail(textValue)){
+        //         //_buttonDisabled = false;
+        //         //_validate = 'email';
+        //       } else {
+        //         _buttonDisabled = true;
+        //       }
+        //     });
+        //   },
 
-          decoration: InputDecoration(
-              focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: PRIMARY_COLOR, width: 2.0)),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Color(0xFFCCCCCC)),
-              ),
-              labelText: 'Email',
-              labelStyle: TextStyle(color: BLACK_GREY)),
-        ),
-        SizedBox(
-          height: 0,
-        ),
-        Align(
-          alignment: Alignment.topLeft,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(AppLocalizations.of(context)!.translate('example')! + ' : ',
-                  style: GlobalStyle.authNotes),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('dradonetakougang@gmail.com',
-                      style: GlobalStyle.authNotes),
-                  //Text('example@domain.com', style: GlobalStyle.authNotes)
-                ],
-              )
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 0,
-        ),
+        //   decoration: InputDecoration(
+        //       focusedBorder: UnderlineInputBorder(
+        //           borderSide: BorderSide(color: PRIMARY_COLOR, width: 2.0)),
+        //       enabledBorder: UnderlineInputBorder(
+        //         borderSide: BorderSide(color: Color(0xFFCCCCCC)),
+        //       ),
+        //       labelText: 'Email',
+        //       labelStyle: TextStyle(color: BLACK_GREY)),
+        // ),
+        // SizedBox(
+        //   height: 0,
+        // ),
+        // Align(
+        //   alignment: Alignment.topLeft,
+        //   child: Row(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(AppLocalizations.of(context)!.translate('example')! + ' : ',
+        //           style: GlobalStyle.authNotes),
+        //       Column(
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Text('dradonetakougang@gmail.com',
+        //               style: GlobalStyle.authNotes),
+        //           //Text('example@domain.com', style: GlobalStyle.authNotes)
+        //         ],
+        //       )
+        //     ],
+        //   ),
+        // ),
+        // SizedBox(
+        //   height: 0,
+        // ),
 
         Container(
           child: TextButton(
@@ -349,8 +349,10 @@ class _SignupPageState extends State<SignupPage> {
               ),
               onPressed: () {
                 if (!_buttonDisabled) {
-                  signup(_controllerPhoneNumber.text, _controllerPincode.text,
-                      _controllerName.text, _controllerEmail.text);
+                  signup(
+                    _controllerPhoneNumber.text,
+                    _controllerPincode.text,
+                  );
                   Navigator.push(
                       context,
                       MaterialPageRoute(

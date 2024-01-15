@@ -106,7 +106,7 @@ class ApiService {
     try {
       response = await dioConnect(LOGIN_API, apiToken,
           data:
-              data); // cette ligne effectuer un appel d'api en utilisant la bibiotheque Dio, cette ligne apple la fonction dioconnect avec trois parametres qui sont  l'URL de l'API, data (les données de la requête) et apiToken (le jeton d'API) et La fonction dioConnect renvoie une réponse HTTP qui est stockée dans la variable response enfin Le mot-clé await est utilisé pour attendre la fin de l'appel à l'API avant de continuer l'exécution du code, car l'appel à l'API peut prendre du temps pour se terminer.
+              data); // cette ligne effectuer un appel vers d'api en utilisant la bibiotheque Dio, cette ligne apple la fonction dioconnect avec trois parametres qui sont  l'URL de l'API, data (les données de la requête) et apiToken (le jeton d'API) et La fonction dioConnect renvoie une réponse HTTP qui est stockée dans la variable response enfin Le mot-clé await est utilisé pour attendre la fin de l'appel à l'API avant de continuer l'exécution du code, car l'appel à l'API peut prendre du temps pour se terminer.
       // cette condition est utilise pour verifier que reponse.data contient vraiment les information de l'utilisateurs les lignes restantes sont utilisees pour stoker les information de l'utilisateur
       if (response.data['user'] != null) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -138,6 +138,10 @@ class ApiService {
   Future<dynamic> signup(dynamic data, apiToken) async {
     print(data);
     try {
+      var dio = Dio();
+      dio.options.connectTimeout = 5000; // Temps d'attente de 5 secondes
+      dio.options.receiveTimeout =
+          3000; // Temps d'attente pour la réception des données
       response = await dioConnect(SIGNUP_API, apiToken, data: data);
       // cette condition est utilise pour verifier que reponse.data contient vraiment les information de l'utilisateurs les lignes restantes sont utilisees pour stoker les information de l'utilisateur
       if (response.data['user'] != null) {

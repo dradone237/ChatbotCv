@@ -47,7 +47,11 @@ class _ActivityReviewPageState extends State<ActivityReviewPage> {
   void initState() {
     // get data when initState
     _reviewBloc = BlocProvider.of<ReviewBloc>(context);
-    _reviewBloc.add(GetReview(sessionId: SESSION_ID, skip: _apiPage.toString(), limit: LIMIT_PAGE.toString(), apiToken: apiToken));
+    _reviewBloc.add(GetReview(
+        sessionId: SESSION_ID,
+        skip: _apiPage.toString(),
+        limit: LIMIT_PAGE.toString(),
+        apiToken: apiToken));
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _initForLang();
@@ -56,9 +60,16 @@ class _ActivityReviewPageState extends State<ActivityReviewPage> {
     super.initState();
   }
 
-  void _initForLang(){
+  void _initForLang() {
     setState(() {
-      starList = [AppLocalizations.of(context)!.translate('all_review')!, '1', '2', '3', '4', '5'];
+      starList = [
+        AppLocalizations.of(context)!.translate('all_review')!,
+        '1',
+        '2',
+        '3',
+        '4',
+        '5'
+      ];
     });
   }
 
@@ -77,7 +88,11 @@ class _ActivityReviewPageState extends State<ActivityReviewPage> {
 
     if (currentScroll == maxScroll) {
       if (_lastData == false && !_processApi) {
-        _reviewBloc.add(GetReview(sessionId: SESSION_ID, skip: _apiPage.toString(), limit: LIMIT_PAGE.toString(), apiToken: apiToken));
+        _reviewBloc.add(GetReview(
+            sessionId: SESSION_ID,
+            skip: _apiPage.toString(),
+            limit: LIMIT_PAGE.toString(),
+            apiToken: apiToken));
         _processApi = true;
       }
     }
@@ -101,12 +116,13 @@ class _ActivityReviewPageState extends State<ActivityReviewPage> {
         ),
         body: BlocListener<ReviewBloc, ReviewState>(
           listener: (context, state) {
-            if(state is ReviewError) {
-              _globalFunction.showToast(type: 'error', message: state.errorMessage);
+            if (state is ReviewError) {
+              _globalFunction.showToast(
+                  type: 'error', message: state.errorMessage);
             }
-            if(state is GetReviewSuccess) {
+            if (state is GetReviewSuccess) {
               _scrollController.addListener(_onScroll);
-              if(state.reviewData.length==0){
+              if (state.reviewData.length == 0) {
                 _lastData = true;
               } else {
                 _apiPage += LIMIT_PAGE;
@@ -133,37 +149,36 @@ class _ActivityReviewPageState extends State<ActivityReviewPage> {
               Container(
                 child: BlocBuilder<ReviewBloc, ReviewState>(
                   builder: (context, state) {
-                    if(state is ReviewError) {
+                    if (state is ReviewError) {
                       return Container(
                           child: Center(
-                              child: Text(ERROR_OCCURED, style: TextStyle(
-                                  fontSize: 14,
-                                  color: BLACK_GREY
-                              ))
-                          )
-                      );
+                              child: Text(ERROR_OCCURED,
+                                  style: TextStyle(
+                                      fontSize: 14, color: BLACK_GREY))));
                     } else {
-                      if(_lastData && _apiPage==0){
+                      if (_lastData && _apiPage == 0) {
                         return Container(
                             child: Center(
-                                child: Text(AppLocalizations.of(context)!.translate('no_product_review')!, style: TextStyle(
-                                    fontSize: 14,
-                                    color: BLACK_GREY
-                                ))
-                            )
-                        );
+                                child: Text(
+                                    AppLocalizations.of(context)!
+                                        .translate('no_product_review')!,
+                                    style: TextStyle(
+                                        fontSize: 14, color: BLACK_GREY))));
                       } else {
-                        if(reviewData.length==0){
+                        if (reviewData.length == 0) {
                           return _shimmerLoading.buildShimmerReview();
                         } else {
                           return ListView.builder(
                             shrinkWrap: true,
                             physics: ScrollPhysics(),
-                            itemCount: (state is ReviewWaiting) ? reviewData.length + 1 : reviewData.length,
+                            itemCount: (state is ReviewWaiting)
+                                ? reviewData.length + 1
+                                : reviewData.length,
                             // Add one more item for progress indicator
                             itemBuilder: (BuildContext context, int index) {
                               if (index == reviewData.length) {
-                                return _globalWidget.buildProgressIndicator(_lastData);
+                                return _globalWidget
+                                    .buildProgressIndicator(_lastData);
                               } else {
                                 return _buildReviewCard(index);
                               }
@@ -197,19 +212,28 @@ class _ActivityReviewPageState extends State<ActivityReviewPage> {
                   color: starIndex == index ? SOFT_BLUE : Colors.grey[300]!),
               borderRadius: BorderRadius.all(Radius.circular(10))),
           child: index == 0
-              ? Text(txt, style: TextStyle(color: starIndex == index ? Colors.white : CHARCOAL))
+              ? Text(txt,
+                  style: TextStyle(
+                      color: starIndex == index ? Colors.white : CHARCOAL))
               : Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  Text(txt, style: TextStyle(color: starIndex == index ? Colors.white : CHARCOAL)),
-                  SizedBox(width: 2),
-                  Icon(Icons.star, color: starIndex == index ? Colors.white : Colors.yellow[700], size: 12),
-                ],
-              )),
+                  crossAxisAlignment: WrapCrossAlignment.center,
+                  children: [
+                    Text(txt,
+                        style: TextStyle(
+                            color:
+                                starIndex == index ? Colors.white : CHARCOAL)),
+                    SizedBox(width: 2),
+                    Icon(Icons.star,
+                        color: starIndex == index
+                            ? Colors.white
+                            : Colors.yellow[700],
+                        size: 12),
+                  ],
+                )),
     );
   }
 
-  Widget _buildReviewCard(index){
+  Widget _buildReviewCard(index) {
     return Card(
       margin: EdgeInsets.only(top: 16),
       shape: RoundedRectangleBorder(
@@ -222,14 +246,15 @@ class _ActivityReviewPageState extends State<ActivityReviewPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(reviewData[index].date, style: TextStyle(fontSize: 13, color: SOFT_GREY)),
+            Text(reviewData[index].date,
+                style: TextStyle(fontSize: 13, color: SOFT_GREY)),
             SizedBox(height: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(reviewData[index].name, style: TextStyle(
-                    fontSize: 14, fontWeight: FontWeight.bold
-                )),
+                Text(reviewData[index].name,
+                    style:
+                        TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
                 _globalWidget.createRatingBar(reviewData[index].rating)
               ],
             ),

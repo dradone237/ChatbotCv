@@ -83,22 +83,24 @@ class _SigninPageState extends State<SigninPage> {
   }
 
   void signin({String? password}) async {
+    // la fonction signin prends en paramettre le numero de telephne et le mot de passe
     // ici notre fonction signin prends seulement en parametre le password de type String ou null car La présence du symbole ? après le type String indique que le paramètre peut être null.
     try {
       final data = {
+        //creation de l'objet data qui va nous permettre t'envoie les donnees a partir de L'API
         'phoneNumber': phone,
         'password': password,
       };
       print(data);
 
-      // creation de a variable response de final qui contenir le resultat de la requette  login depuis  l'API
+      // la variable response de l'objet data qui va contenir le resultat de la requette  login depuis  l'API
       final response = await apiService.login(data,
-          apiToken); // pour realise cette ligne il faut creer une variable apiToken pour ce fais dans la page home faire ctrl + f et recherche apiToken et copier cette ligne qui contient apiToken et le coller apres la ligne qui nous permet de creer une instance de notre class et faire les inportation
+          apiToken); // pour realise cette ligne il faut creer une variable apiToken, pour ce fais dans la page home faire ctrl + f et recherche apiToken et copier cette ligne qui contient apiToken et le coller apres la ligne qui nous permet de creer une instance de notre class et faire les inportation
       print(response);
       print(
           'lklkkmkkmkjnjhhbnlllllllllllllllllllllllpppppppppppppppppppppppppppppoiiiiiiiiiiiii');
 
-      // si le login c'est bien passe car l'utilisateur a bien entre les informations puis l'utiliateur seras rediriger directemment dans le menu principale qui est le boutton navigation
+      // si le login c'est bien passe car l'utilisateur a bien entre les informations puis l'utiliateur seras rediriger directemment dans le menu principal c'est dire la page Home en cliquan sur le boutton navigation
       Navigator.pushReplacement(context,
           MaterialPageRoute(builder: (context) => BottomNavigationBarPage()));
     } catch (e) {
@@ -122,7 +124,7 @@ class _SigninPageState extends State<SigninPage> {
         body: ListView(
       padding: EdgeInsets.fromLTRB(30, 120, 30, 30),
       children: <Widget>[
-        Center(child: Image.asset('assets/images/logo_light.png', height: 50)),
+        //Center(child: Image.asset('assets/images/logo_light.png', height: 50)),
         SizedBox(
           height: 70,
         ),
